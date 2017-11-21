@@ -1,0 +1,53 @@
+import java.util.Random;
+
+public class GameOfLife {
+   public int[][] cellular_automata;
+   
+   public GameOfLife (int width, int heigth)
+   {
+	   this.cellular_automata = new int [heigth][width];
+	   this.random_population(width,heigth);
+	   
+   }
+		public void random_population(int width, int heigth)
+		{
+			Random rd = new Random();
+			double alive_probability = 0.15;
+			  
+			  for(int i=0; i< heigth; i++)
+				  for(int j=0; j < heigth; j++)
+					  this.cellular_automata[i][j] = rd.nextDouble() < alive_probability ? 1 : 0;
+			  }
+		public int [][] getCellularAutomata()
+		{
+			return this.cellular_automata;
+		}
+		public void nextIteration()
+		{
+			int counter;
+			int n1 = this.cellular_automata.length;
+			int n2 = this.cellular_automata[0].length;
+			for(int i=0; i < this.cellular_automata.length;i++)
+				for(int j=0; j < n2; j++)
+				{
+					counter = this.cellular_automata[(i-1+n1)%n1][(j-1+n2)%n2]
+							 +this.cellular_automata[(i-1+n1)%n1][j]
+							 +this.cellular_automata[(i-1+n1)%n1][(j+1)%n2]
+							 +this.cellular_automata[i][(j-1+n2)%n2]
+							 +this.cellular_automata[i][(j+1)%n2]
+							 +this.cellular_automata[(i+1)%n1][(j-1+n2)%n2]
+							 +this.cellular_automata[(i+1)%n1][j]
+							 +this.cellular_automata[(i+1)%n1][j]
+							 +this.cellular_automata[(i+1)%n1][(j+1)%n2];
+					
+				if(this.cellular_automata[i][j]==1)
+				{
+					this.cellular_automata[i][j]=(counter < 2 || counter > 3) ? 0:1;
+				}
+				else
+				{
+					this.cellular_automata[i][j]= counter == 3 ? 1:0;
+				}
+				}
+		}
+}
