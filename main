@@ -1,0 +1,35 @@
+// main.
+import processing.core.PApplet;
+public class GUI_gol extends PApplet {
+
+	public static void main(String[] args) {
+		PApplet.main("GUI_gol");
+
+	}
+      int square_size = 8 , width=200, heigth = 100;
+      GameOfLife ca = new GameOfLife(width,heigth);
+      
+      public void settings() {
+    	  size (width * square_size , heigth*square_size);
+    	  
+      }
+      public void draw() {
+    	  background(50);
+    	  
+    	  for(int i=0; i<heigth;i++)
+    		  for(int j=0; j<width;j++) {
+    			  if(ca.cellular_automata[i][j]==1)
+    				  fill(255,0,0);
+    			  else
+    				  fill(0);
+    			      rect(j*square_size,i*square_size,square_size, frameRate, frameRate, frameRate, frameRate, frameRate);
+    			      
+    		  }
+    	  try
+    	  {
+    		  Thread.sleep(100);
+    		  ca.nextIteration();
+    	  }
+    	  catch(InterruptedException e) {e.printStackTrace();}
+      }
+}
